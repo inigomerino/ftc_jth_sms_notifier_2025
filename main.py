@@ -8,7 +8,7 @@ from bson import ObjectId
 import requests
 import twilio
 import jwt
-from flask import Flask, jsonify, request, session
+from flask import Flask, request, session
 from flask_restful import Api, Resource
 from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt

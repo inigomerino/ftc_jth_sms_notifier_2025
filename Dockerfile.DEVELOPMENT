@@ -22,7 +22,7 @@ RUN pipenv install
 # Copy application code
 COPY . /app/
 
-# Expose port 5000
+# Expose port 5100
 EXPOSE 5100
 
 # Start the Flask app using Gunicorn
