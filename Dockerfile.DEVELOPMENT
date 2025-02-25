@@ -1,6 +1,21 @@
 # Use official Python image with version 3.10
 FROM python:3.10-slim
 
+# get the libs we need
+RUN apt-get update
+
+# set up the bootstrap for python module dependencies
+RUN pip3 install pipenv
+
+# update pip
+RUN pip3 install --upgrade pip
+
+# Copy application code
+COPY . /app/
+
+# Set the working directory inside the container
+WORKDIR /app
+
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
@@ -8,19 +23,8 @@ ENV PYTHONUNBUFFERED=1 \
     FLASK_APP=main.py \
     FLASK_ENV=production
 
-# Set the working directory inside the container
-WORKDIR /app
-
-# # Copy Pipfile and Pipfile.lock first (for better caching)
-# COPY Pipfile Pipfile.lock /app/
-
-# Install dependencies
-RUN pip install pipenv 
-RUN pipenv install
-# RUN pipenv install --deploy --ignore-pipfile
-
-# Copy application code
-COPY . /app/
+# deploy libs
+RUN pipenv install --deploy
 
 # Expose port 5100
 EXPOSE 5100
